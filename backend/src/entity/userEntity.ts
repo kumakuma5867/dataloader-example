@@ -46,9 +46,12 @@ export class User {
   @DeleteDateColumn({ type: "datetime", name: "deleted_at", nullable: true })
   deletedAt?: Date | null;
 
-  @ManyToOne((type) => Team)
+  @Column({ type: "int", name: "team_id", nullable: true })
+  teamId?: number | null;
+
+  @ManyToOne((type) => Team, { nullable: true })
   @JoinColumn({ name: "team_id", referencedColumnName: "id" })
-  team: Team;
+  team?: Team | null;
 
   @OneToMany((type) => Todo, (todo) => todo.asignee)
   todos: Todo[];

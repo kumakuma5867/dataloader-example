@@ -35,12 +35,15 @@ export class UserService {
 
   async fetchUsersByTeams(teams: Team[]) {
     console.log("Called only one time.");
-    return teams.map(async (team) => {
-      return await this.userRepository.find({
-        where: {
-          team,
-        },
-      });
+    //必要になるuserをまとめて取得
+    const users = await this.userRepository.find({
+      where: {
+        teamId: In(teams.map((team) => team.id)),
+      },
+    });
+    // Dataloaderの特性として、「引数の配列と同じ要素数の配列」を「順番が合致するように」返却する必要あり
+    return teams.map((team) => {
+      users.find((user) => user.teamId === team.id);
     });
   }
 

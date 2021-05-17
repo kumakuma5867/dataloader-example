@@ -42,9 +42,7 @@ export class UserService {
       },
     });
     // Dataloaderの特性として、「引数の配列と同じ要素数の配列」を「順番が合致するように」返却する必要あり
-    return teams.map((team) => {
-      users.find((user) => user.teamId === team.id);
-    });
+    return teams.map((team) => users.filter((user) => user.teamId === team.id));
   }
 
   loaderForTeams = new DataLoader(async (teams: Team[]) => {

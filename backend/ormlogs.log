@@ -1,0 +1,921 @@
+[2021-05-17T02:54:03.485Z][QUERY]: START TRANSACTION
+[2021-05-17T02:54:03.490Z][QUERY]: SELECT DATABASE() AS `db_name`
+[2021-05-17T02:54:03.496Z][QUERY]: 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+                 UNION 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+                 UNION 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+                
+[2021-05-17T02:54:03.497Z][QUERY]: 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+                
+[2021-05-17T02:54:03.498Z][QUERY]: SELECT * FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'team'
+            ) `kcu` WHERE `CONSTRAINT_NAME` = 'PRIMARY'
+[2021-05-17T02:54:03.498Z][QUERY]: 
+            SELECT
+                `SCHEMA_NAME`,
+                `DEFAULT_CHARACTER_SET_NAME` as `CHARSET`,
+                `DEFAULT_COLLATION_NAME` AS `COLLATION`
+            FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+            
+[2021-05-17T02:54:03.499Z][QUERY]: 
+            SELECT
+                `s`.*
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `s`
+            LEFT JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `rc`
+                ON
+                    `s`.`INDEX_NAME` = `rc`.`CONSTRAINT_NAME`
+                    AND
+                    `s`.`TABLE_SCHEMA` = `rc`.`CONSTRAINT_SCHEMA`
+            WHERE
+                `s`.`INDEX_NAME` != 'PRIMARY'
+                AND
+                `rc`.`CONSTRAINT_NAME` IS NULL
+            
+[2021-05-17T02:54:03.500Z][QUERY]: 
+            SELECT
+                `kcu`.`TABLE_SCHEMA`,
+                `kcu`.`TABLE_NAME`,
+                `kcu`.`CONSTRAINT_NAME`,
+                `kcu`.`COLUMN_NAME`,
+                `kcu`.`REFERENCED_TABLE_SCHEMA`,
+                `kcu`.`REFERENCED_TABLE_NAME`,
+                `kcu`.`REFERENCED_COLUMN_NAME`,
+                `rc`.`DELETE_RULE` `ON_DELETE`,
+                `rc`.`UPDATE_RULE` `ON_UPDATE`
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'team'
+            ) `kcu`
+            INNER JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `rc`
+                ON
+                    `rc`.`CONSTRAINT_SCHEMA` = `kcu`.`CONSTRAINT_SCHEMA`
+                    AND
+                    `rc`.`TABLE_NAME` = `kcu`.`TABLE_NAME`
+                    AND
+                    `rc`.`CONSTRAINT_NAME` = `kcu`.`CONSTRAINT_NAME`
+            
+[2021-05-17T02:54:03.624Z][QUERY]: SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'dataloader' AND `TABLE_NAME` = 'typeorm_metadata'
+[2021-05-17T02:54:03.630Z][QUERY]: CREATE TABLE `todo` (`id` int NOT NULL AUTO_INCREMENT, `title` varchar(100) NOT NULL, `body` mediumtext NOT NULL, `user_id` int NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB
+[2021-05-17T02:54:03.695Z][QUERY]: CREATE TABLE `user` (`id` int NOT NULL AUTO_INCREMENT, `first_name` varchar(255) NOT NULL, `last_name` varchar(255) NOT NULL, `age` int NOT NULL, `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), `updated_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), `deleted_at` datetime(6) NULL, `team_id` int NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB
+[2021-05-17T02:54:03.738Z][QUERY]: CREATE TABLE `team` (`id` int NOT NULL AUTO_INCREMENT, `name` varchar(200) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB
+[2021-05-17T02:54:03.761Z][QUERY]: ALTER TABLE `todo` ADD CONSTRAINT `FK_9cb7989853c4cb7fe427db4b260` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+[2021-05-17T02:54:03.863Z][QUERY]: ALTER TABLE `user` ADD CONSTRAINT `FK_155dbc144ff2bd4713fdf1f6c77` FOREIGN KEY (`team_id`) REFERENCES `team`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+[2021-05-17T02:54:03.940Z][QUERY]: COMMIT
+[2021-05-17T02:54:41.159Z][QUERY]: SELECT `Todo`.`id` AS `Todo_id`, `Todo`.`title` AS `Todo_title`, `Todo`.`body` AS `Todo_body`, `Todo`.`user_id` AS `Todo_user_id` FROM `todo` `Todo`
+[2021-05-17T02:54:44.292Z][QUERY]: START TRANSACTION
+[2021-05-17T02:54:44.299Z][QUERY]: INSERT INTO `team`(`id`, `name`) VALUES (DEFAULT, ?) -- PARAMETERS: ["Team"]
+[2021-05-17T02:54:44.320Z][QUERY]: COMMIT
+[2021-05-17T02:55:27.742Z][QUERY]: START TRANSACTION
+[2021-05-17T02:55:27.745Z][QUERY]: SELECT DATABASE() AS `db_name`
+[2021-05-17T02:55:27.747Z][QUERY]: 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+                 UNION 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+                 UNION 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+                
+[2021-05-17T02:55:27.748Z][QUERY]: 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+                
+[2021-05-17T02:55:27.748Z][QUERY]: SELECT * FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'team'
+            ) `kcu` WHERE `CONSTRAINT_NAME` = 'PRIMARY'
+[2021-05-17T02:55:27.749Z][QUERY]: 
+            SELECT
+                `SCHEMA_NAME`,
+                `DEFAULT_CHARACTER_SET_NAME` as `CHARSET`,
+                `DEFAULT_COLLATION_NAME` AS `COLLATION`
+            FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+            
+[2021-05-17T02:55:27.750Z][QUERY]: 
+            SELECT
+                `s`.*
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `s`
+            LEFT JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `rc`
+                ON
+                    `s`.`INDEX_NAME` = `rc`.`CONSTRAINT_NAME`
+                    AND
+                    `s`.`TABLE_SCHEMA` = `rc`.`CONSTRAINT_SCHEMA`
+            WHERE
+                `s`.`INDEX_NAME` != 'PRIMARY'
+                AND
+                `rc`.`CONSTRAINT_NAME` IS NULL
+            
+[2021-05-17T02:55:27.751Z][QUERY]: 
+            SELECT
+                `kcu`.`TABLE_SCHEMA`,
+                `kcu`.`TABLE_NAME`,
+                `kcu`.`CONSTRAINT_NAME`,
+                `kcu`.`COLUMN_NAME`,
+                `kcu`.`REFERENCED_TABLE_SCHEMA`,
+                `kcu`.`REFERENCED_TABLE_NAME`,
+                `kcu`.`REFERENCED_COLUMN_NAME`,
+                `rc`.`DELETE_RULE` `ON_DELETE`,
+                `rc`.`UPDATE_RULE` `ON_UPDATE`
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'team'
+            ) `kcu`
+            INNER JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `rc`
+                ON
+                    `rc`.`CONSTRAINT_SCHEMA` = `kcu`.`CONSTRAINT_SCHEMA`
+                    AND
+                    `rc`.`TABLE_NAME` = `kcu`.`TABLE_NAME`
+                    AND
+                    `rc`.`CONSTRAINT_NAME` = `kcu`.`CONSTRAINT_NAME`
+            
+[2021-05-17T02:55:27.840Z][QUERY]: SELECT VERSION() AS `version`
+[2021-05-17T02:55:27.844Z][QUERY]: SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'dataloader' AND `TABLE_NAME` = 'typeorm_metadata'
+[2021-05-17T02:55:27.853Z][QUERY]: COMMIT
+[2021-05-17T02:55:33.794Z][QUERY]: START TRANSACTION
+[2021-05-17T02:55:33.797Z][QUERY]: SELECT DATABASE() AS `db_name`
+[2021-05-17T02:55:33.799Z][QUERY]: 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+                 UNION 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+                 UNION 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+                
+[2021-05-17T02:55:33.799Z][QUERY]: 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+                
+[2021-05-17T02:55:33.800Z][QUERY]: SELECT * FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'team'
+            ) `kcu` WHERE `CONSTRAINT_NAME` = 'PRIMARY'
+[2021-05-17T02:55:33.801Z][QUERY]: 
+            SELECT
+                `SCHEMA_NAME`,
+                `DEFAULT_CHARACTER_SET_NAME` as `CHARSET`,
+                `DEFAULT_COLLATION_NAME` AS `COLLATION`
+            FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+            
+[2021-05-17T02:55:33.802Z][QUERY]: 
+            SELECT
+                `s`.*
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `s`
+            LEFT JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `rc`
+                ON
+                    `s`.`INDEX_NAME` = `rc`.`CONSTRAINT_NAME`
+                    AND
+                    `s`.`TABLE_SCHEMA` = `rc`.`CONSTRAINT_SCHEMA`
+            WHERE
+                `s`.`INDEX_NAME` != 'PRIMARY'
+                AND
+                `rc`.`CONSTRAINT_NAME` IS NULL
+            
+[2021-05-17T02:55:33.803Z][QUERY]: 
+            SELECT
+                `kcu`.`TABLE_SCHEMA`,
+                `kcu`.`TABLE_NAME`,
+                `kcu`.`CONSTRAINT_NAME`,
+                `kcu`.`COLUMN_NAME`,
+                `kcu`.`REFERENCED_TABLE_SCHEMA`,
+                `kcu`.`REFERENCED_TABLE_NAME`,
+                `kcu`.`REFERENCED_COLUMN_NAME`,
+                `rc`.`DELETE_RULE` `ON_DELETE`,
+                `rc`.`UPDATE_RULE` `ON_UPDATE`
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'team'
+            ) `kcu`
+            INNER JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `rc`
+                ON
+                    `rc`.`CONSTRAINT_SCHEMA` = `kcu`.`CONSTRAINT_SCHEMA`
+                    AND
+                    `rc`.`TABLE_NAME` = `kcu`.`TABLE_NAME`
+                    AND
+                    `rc`.`CONSTRAINT_NAME` = `kcu`.`CONSTRAINT_NAME`
+            
+[2021-05-17T02:55:33.849Z][QUERY]: SELECT VERSION() AS `version`
+[2021-05-17T02:55:33.852Z][QUERY]: SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'dataloader' AND `TABLE_NAME` = 'typeorm_metadata'
+[2021-05-17T02:55:33.859Z][QUERY]: COMMIT
+[2021-05-17T02:55:55.954Z][QUERY]: START TRANSACTION
+[2021-05-17T02:55:55.962Z][QUERY]: SELECT DATABASE() AS `db_name`
+[2021-05-17T02:55:55.981Z][QUERY]: 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+                 UNION 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+                 UNION 
+                SELECT
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`
+                FROM
+                    `INFORMATION_SCHEMA`.`TABLES`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+                
+[2021-05-17T02:55:55.999Z][QUERY]: 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+                
+[2021-05-17T02:55:56.003Z][QUERY]: SELECT * FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'team'
+            ) `kcu` WHERE `CONSTRAINT_NAME` = 'PRIMARY'
+[2021-05-17T02:55:56.007Z][QUERY]: 
+            SELECT
+                `SCHEMA_NAME`,
+                `DEFAULT_CHARACTER_SET_NAME` as `CHARSET`,
+                `DEFAULT_COLLATION_NAME` AS `COLLATION`
+            FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+            
+[2021-05-17T02:55:56.011Z][QUERY]: 
+            SELECT
+                `s`.*
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `s`
+            LEFT JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `rc`
+                ON
+                    `s`.`INDEX_NAME` = `rc`.`CONSTRAINT_NAME`
+                    AND
+                    `s`.`TABLE_SCHEMA` = `rc`.`CONSTRAINT_SCHEMA`
+            WHERE
+                `s`.`INDEX_NAME` != 'PRIMARY'
+                AND
+                `rc`.`CONSTRAINT_NAME` IS NULL
+            
+[2021-05-17T02:55:56.014Z][QUERY]: 
+            SELECT
+                `kcu`.`TABLE_SCHEMA`,
+                `kcu`.`TABLE_NAME`,
+                `kcu`.`CONSTRAINT_NAME`,
+                `kcu`.`COLUMN_NAME`,
+                `kcu`.`REFERENCED_TABLE_SCHEMA`,
+                `kcu`.`REFERENCED_TABLE_NAME`,
+                `kcu`.`REFERENCED_COLUMN_NAME`,
+                `rc`.`DELETE_RULE` `ON_DELETE`,
+                `rc`.`UPDATE_RULE` `ON_UPDATE`
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'dataloader'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'team'
+            ) `kcu`
+            INNER JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'todo'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'user'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'dataloader'
+                    AND
+                    `TABLE_NAME` = 'team'
+            ) `rc`
+                ON
+                    `rc`.`CONSTRAINT_SCHEMA` = `kcu`.`CONSTRAINT_SCHEMA`
+                    AND
+                    `rc`.`TABLE_NAME` = `kcu`.`TABLE_NAME`
+                    AND
+                    `rc`.`CONSTRAINT_NAME` = `kcu`.`CONSTRAINT_NAME`
+            
+[2021-05-17T02:55:56.071Z][QUERY]: SELECT VERSION() AS `version`
+[2021-05-17T02:55:56.074Z][QUERY]: SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'dataloader' AND `TABLE_NAME` = 'typeorm_metadata'
+[2021-05-17T02:55:56.081Z][QUERY]: COMMIT
+[2021-05-17T02:56:02.680Z][QUERY]: SELECT `Todo`.`id` AS `Todo_id`, `Todo`.`title` AS `Todo_title`, `Todo`.`body` AS `Todo_body`, `Todo`.`user_id` AS `Todo_user_id` FROM `todo` `Todo`
+[2021-05-17T02:56:04.593Z][QUERY]: SELECT `Team`.`id` AS `Team_id`, `Team`.`name` AS `Team_name` FROM `team` `Team`
+[2021-05-17T02:56:04.614Z][QUERY]: SELECT `User`.`id` AS `User_id`, `User`.`first_name` AS `User_first_name`, `User`.`last_name` AS `User_last_name`, `User`.`age` AS `User_age`, `User`.`created_at` AS `User_created_at`, `User`.`updated_at` AS `User_updated_at`, `User`.`deleted_at` AS `User_deleted_at`, `User`.`team_id` AS `User_team_id` FROM `user` `User` WHERE ( `User`.`team_id` = ? ) AND ( `User`.`deleted_at` IS NULL ) -- PARAMETERS: [1]
+[2021-05-17T02:56:10.763Z][QUERY]: START TRANSACTION
+[2021-05-17T02:56:10.767Z][QUERY]: INSERT INTO `team`(`id`, `name`) VALUES (DEFAULT, ?) -- PARAMETERS: ["Team2"]
+[2021-05-17T02:56:10.772Z][QUERY]: COMMIT
+[2021-05-17T02:56:12.388Z][QUERY]: START TRANSACTION
+[2021-05-17T02:56:12.394Z][QUERY]: INSERT INTO `team`(`id`, `name`) VALUES (DEFAULT, ?) -- PARAMETERS: ["Team3"]
+[2021-05-17T02:56:12.401Z][QUERY]: COMMIT

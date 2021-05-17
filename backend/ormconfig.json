@@ -1,0 +1,25 @@
+{
+   "type": "mysql",
+   "host": "dataloader-mysql",
+   "port": 3306,
+   "username": "dataloader",
+   "password": "dataloader",
+   "database": "dataloader",
+   "synchronize": true,
+   "logging": true,
+   "logger": "file",
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}

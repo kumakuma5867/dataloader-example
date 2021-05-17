@@ -1,0 +1,7 @@
+.vscode
+.env
+container/mysql/data
+container/cdk/.aws/*
+!container/cdk/.aws/.gitkeep
+
+docker-compose.yml

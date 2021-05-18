@@ -10,9 +10,16 @@ services:
     volumes:
       - ./backend:/app/backend
     working_dir: "/app/backend"
-
     # command: sh -c "npm i; npm start;"
-
+    depends_on:
+      - mysql
+    entrypoint: >-
+      sh -c "
+        if [ ! -e '/app/node_modules/graphql' ]; then
+          npm install
+        fi
+        npm run start
+      "
   mysql:
     image: mysql:8.0
     container_name: dataloader-mysql
